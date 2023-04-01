@@ -1,11 +1,8 @@
 package br.com.rodrigofreund.easyword.model.event;
 
-public interface EventListener extends Comparable<EventListener> {
+@FunctionalInterface
+public interface EventListener<T> {
 
-	String getName();
-	
-	@Override
-	default int compareTo(EventListener o) {
-		return getName().compareTo(o.getName());
-	}
+	void update(T data);
+
 }

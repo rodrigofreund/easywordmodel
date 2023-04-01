@@ -1,5 +1,6 @@
 package br.com.rodrigofreund.easyword.model.event;
 
 public enum EventType {
-	ACTION;
+	SEARCH_BUTTON_ACTION,
+	CLOSE_APP_ACTION;
 }

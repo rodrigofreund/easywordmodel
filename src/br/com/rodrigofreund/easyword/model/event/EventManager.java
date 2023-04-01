@@ -1,12 +1,12 @@
 package br.com.rodrigofreund.easyword.model.event;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
-public class EventManager {
-	private Map<EventType, Set<EventListener>> eventListeners;
+public final class EventManager {
+	private Map<EventType, List<EventListener<EventParam>>> eventListeners;
 	
 	private static EventManager instance;
 	
@@ -14,27 +14,22 @@ public class EventManager {
 		eventListeners = new TreeMap<>();
 	}
 	
-	static EventManager instance() {
+	public static EventManager instance() {
 		if(instance == null)
 			instance = new EventManager();
 		return instance;
 	}
 	
-	public void subscribe(EventType eventType, EventListener eventListener) {
-		
-		eventListeners.merge(eventType, Set.of(eventListener), (u, i) -> {
-			var nlst = new TreeSet<EventListener>();
+	public void subscribe(EventType eventType, EventListener<EventParam> eventListener) {
+		eventListeners.merge(eventType, List.of(eventListener), (u, i) -> {
+			var nlst = new ArrayList<EventListener<EventParam>>();
 			nlst.addAll(u);
 			nlst.addAll(i);
 			return nlst;
 		});
 	}
 	
-	public int getEventTypeSize() {
-		return eventListeners.size();
-	}
-	
-	public int getEventTypeListenerSize(EventType eventType) {
-		return eventListeners.get(eventType).size();
+	public void notify(EventType eventType, EventParam arg) {
+		eventListeners.get(eventType).forEach(i -> i.update(arg));
 	}
 }
