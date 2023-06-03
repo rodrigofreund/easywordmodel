@@ -1,13 +1,19 @@
 package br.com.rodrigofreund.easyword.model.event;
 
-public class EmptyParam implements EventParam {
-	
-	public EmptyParam() {
-	}
+public final class EmptyParam extends TextParam {
 
-	@Override
-	public String getValue() {
-		return value;
-	}
+    EmptyParam() {
+        super("empty");
+    }
+
+    @Override
+    public String getValue() {
+        return super.getValue();
+    }
+
+    @Override
+    public EventParam<String> of(String value) {
+        return new EmptyParam();
+    }
 
 }
