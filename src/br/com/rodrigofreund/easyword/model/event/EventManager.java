@@ -37,4 +37,10 @@ public final class EventManager {
             return;
         eventListeners.get(eventType).forEach(i -> i.update(arg));
     }
+    
+    public <T> void notify(EventType eventType) {
+        if(eventListeners.get(eventType) == null)
+            return;
+        eventListeners.get(eventType).forEach(i -> i.update(null));
+    }
 }
